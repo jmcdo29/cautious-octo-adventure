@@ -42,19 +42,8 @@ export const AdvocateSearch = ({
           Searching for: <span>{searchTerm}</span>
         </p>
       </div>
-      <input style={{ border: "1px solid black" }} onChange={onChange} />
-      <button
-        style={{
-          marginLeft: "2em",
-          padding: "0.25em",
-          border: "1px solid black",
-          borderRadius: "1em",
-          backgroundColor: "#8c8c8c",
-        }}
-        onClick={onClick}
-      >
-        Reset Search
-      </button>
+      <input onChange={onChange} />
+      <button onClick={onClick}>Reset Search</button>
     </div>
   );
 };

@@ -20,11 +20,11 @@ All `<br />` components were removed, as the same thing can be accomplished with
 
 # Things I _want_ to fix with time
 
-First and foremost, I would like to implement an infinite scroll or some other form of pagination for the table, as mentioned in the assignment, for possibility of having hundreds of thousands of rows. It's just not practical to fetch them all at once.
+First, I'd like to fire off a fetch request with the search term _at the same time_ as doing some searching locally, so that if there's data in the database that hasn't been fetched yet, it can be returned. That would need to be specifically on blur or button click though, or properly debounced, as to not call the API too often with just simple typing.
 
-Secondly, I'd like to fire off a fetch request with the search term _at the same time_ as doing some searching locally, so that if there's data in the database that hasn't been fetched yet, it can be returned. That would need to be specifically on blur or button click though, or properly debounced, as to not call the API too often with just simple typing.
+Secondly, I'd like to add sorting to the columns, because being able to sort by name, degree type, and years of experience are all incredibly useful things to be able to do. Especially if the degree type has an underlying scoring system to it (like an enum) so that PhD can show up before MD. Filtering on multiple fields would also be a nice addition, if not another layer of complexity.
 
-Thirdly, I'd like to add sorting to the columns, because being able to sort by name, degree type, and years of experience are all incredibly useful things to be able to do. Especially if the degree type has an underlying scoring system to it (like an enum) so that PhD can show up before MD. Filtering on multiple fields would also be a nice addition, if not another layer of complexity.
+Thirdly, adding a way to highlight the searched term would be incredible, but I ran out of time for that. Just a nice little eye candy for the user.
 
 Lastly, I'd much rather use a UI library than worry about writing it all from scratch. I have a preference of MaterialUI, but am flexible with whatever. I think I got a little bogged down in trying to not add too much and as such having to implement a lot of things without much library help.
 

@@ -1,11 +1,14 @@
 "use client";
 
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import type { advocates as dbAdvocates } from "../../db/schema";
 
 type Advocate = typeof dbAdvocates.$inferSelect;
 
 interface AdvocateTableProps {
   advocates: Advocate[];
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
 }
 
 const formatPhoneNumber = (phone: number): string => {
@@ -16,13 +19,39 @@ const formatPhoneNumber = (phone: number): string => {
   )}-${phoneN.substring(6)}`;
 };
 
-export const AdvocateTable = ({ advocates }: Readonly<AdvocateTableProps>) => {
+export const AdvocateTable = ({
+  advocates,
+  page,
+  setPage,
+}: Readonly<AdvocateTableProps>) => {
+  const noAdvocates = advocates.length === 0;
+
+  const pageForward = () => {
+    setPage(page + 1);
+  };
+
+  const pageBackward = () => {
+    let newPage = page - 1;
+    if (newPage < 1) {
+      newPage = 1;
+    }
+    setPage(newPage);
+  };
+
+  const changePageOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    if (parseInt(val) === page) {
+      return;
+    }
+    setPage(parseInt(val));
+  };
+
   return (
     <div style={{ margin: "1em 0" }}>
-      {!advocates.length ? (
+      {noAdvocates ? (
         <div>No advocates found with the search parameters provided.</div>
       ) : (
-        <table>
+        <table style={{ margin: "1em 0", borderRadius: "1em" }}>
           <thead>
             <tr style={{ borderTop: "1px solid black" }}>
               <th>First Name</th>
@@ -46,9 +75,11 @@ export const AdvocateTable = ({ advocates }: Readonly<AdvocateTableProps>) => {
                   <td>{advocate.city}</td>
                   <td>{advocate.degree}</td>
                   <td>
-                    {advocate.specialties.sort().map((s) => (
-                      <div key={s}>{s}</div>
-                    ))}
+                    <ul>
+                      {advocate.specialties.sort().map((s, index) => (
+                        <li key={index}>{s}</li>
+                      ))}
+                    </ul>
                   </td>
                   <td>{advocate.yearsOfExperience}</td>
                   <td>{formatPhoneNumber(advocate.phoneNumber)}</td>
@@ -58,6 +89,24 @@ export const AdvocateTable = ({ advocates }: Readonly<AdvocateTableProps>) => {
           </tbody>
         </table>
       )}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <button
+          onClick={pageBackward}
+          hidden={page < 2}
+          disabled={noAdvocates && page === 1}
+        >
+          &lt;
+        </button>
+        <input
+          defaultValue={page}
+          type="number"
+          disabled={noAdvocates}
+          onBlur={changePageOnBlur}
+        ></input>
+        <button onClick={pageForward} disabled={noAdvocates}>
+          &gt;
+        </button>
+      </div>
     </div>
   );
 };

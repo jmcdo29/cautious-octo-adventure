@@ -8,17 +8,19 @@ import { AdvocateSearch } from "./advocate-search";
 import { AdvocateTable } from "./advocate-table";
 
 export const Advocates = () => {
+  const [page, setPage] = useState(1);
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
 
   useEffect(() => {
-    fetch("/api/advocates").then((response) => {
+    console.log("Making HTTP request");
+    fetch(`/api/advocates?page=${page}`).then((response) => {
       response.json().then((jsonResponse) => {
         setAdvocates(jsonResponse.data);
         setFilteredAdvocates(jsonResponse.data);
       });
     });
-  }, [setAdvocates, setFilteredAdvocates]);
+  }, [setAdvocates, setFilteredAdvocates, page]);
 
   return (
     <>
@@ -26,7 +28,11 @@ export const Advocates = () => {
         advocates={advocates}
         setFilteredAdvocates={setFilteredAdvocates}
       />
-      <AdvocateTable advocates={filteredAdvocates} />
+      <AdvocateTable
+        advocates={filteredAdvocates}
+        page={page}
+        setPage={setPage}
+      />
     </>
   );
 };

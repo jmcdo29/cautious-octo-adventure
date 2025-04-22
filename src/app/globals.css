@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 body {
 	background-color: #4c4c4c;
@@ -27,4 +27,17 @@ tbody>tr:nth-child(odd) {
 
 tr:nth-child(even) {
 	background-color: #77a677;
+}
+
+button {
+	margin-left: "2em";
+	padding: "0.25em";
+	border: "1px solid black";
+	border-radius: "1em";
+	background-color: "#8c8c8c";
+}
+
+input {
+	border-radius: 0.5em;
+	border: "1px solid black"
 }
